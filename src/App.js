@@ -20,8 +20,8 @@ function App() {
           <ThemeToggler />
           <Router>
             <Routes>
-              <Route exact path="/createTask" element={<CreateTask/>} />
-              <Route exact path="/updateTask" element={<UpdateTask/>} />
+              <Route exact path="/createtask" element={<CreateTask/>} />
+              <Route exact path="/updatetask/:id" element={<UpdateTask/>} />
               <Route exact path="/" element={<TaskLists/>} />
             </Routes>
           </Router>

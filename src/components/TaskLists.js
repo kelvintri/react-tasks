@@ -12,9 +12,9 @@ import {
   TableContainer,
   Box,
   Flex,
-  IconButton
+  IconButton,
 } from "@chakra-ui/react";
-import { EditIcon,DeleteIcon } from "@chakra-ui/icons";
+import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
 
 export default function TaskLists() {
   const [APIData, setAPIData] = useState([]);
@@ -25,8 +25,7 @@ export default function TaskLists() {
       .then((resp) => {
         setAPIData(resp.data.data.data);
       });
-  });
-  console.log(APIData);
+  }, []);
   return (
     <Flex>
       <Box width="100%" p={2} my={4}>
@@ -45,14 +44,29 @@ export default function TaskLists() {
             <Tbody>
               {APIData.map((data) => {
                 return (
-                  <Tr>
+                  <Tr key={data.id}>
                     <Td>{data.taskname}</Td>
                     <Td>{data.assignee}</Td>
                     <Td>
-                      <Checkbox borderColor="purple" isChecked={data.taskdone}/>
+                      <Checkbox
+                        borderColor="purple"
+                        colorScheme="blue"
+                        isChecked={data.taskdone}
+                      />
                     </Td>
                     <Td></Td>
-                    <Td><IconButton colorScheme="blue" aria-label="update" icon={<EditIcon/>}/></Td>
+                    <Td>
+                      <IconButton
+                        colorScheme="blue"
+                        aria-label="update"
+                        icon={<EditIcon />}
+                      />
+                      <IconButton
+                        colorScheme="red"
+                        aria-label="delete"
+                        icon={<DeleteIcon />}
+                      />
+                    </Td>
                   </Tr>
                 );
               })}

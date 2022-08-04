@@ -15,21 +15,27 @@ export default function CreateTask() {
   const [taskName, setTaskName] = useState("");
   const [assignee, setAssignee] = useState("");
   const [taskdone, setTaskdone] = useState(false);
-
+  const url = 'https://young-woodland-74082.herokuapp.com/task';
+  const customHeaders = {
+    'content-type': 'application/json',
+  };
   const postData = () => {
     axios
-      .post("https://young-woodland-74082.herokuapp.com/task", {
+      .post(url, {
         taskname: taskName,
         assignee: assignee,
         taskdone: taskdone,
-      })
+      },customHeaders)
       .then(function (response) {
-        console.log(response);
+        console.log(response.data);
       })
       .catch(function (error) {
         console.log(error);
       });
   };
+  const handleTaskNameChange = (e) => setTaskName(e.target.value);
+  const handleAssigneeChange = (e) => setAssignee(e.target.value);
+  const handleTaskdoneChange = (e) => setTaskdone(!taskdone);
 
   return (
     <Flex width="full" align="center" justifyContent="center">
@@ -38,19 +44,30 @@ export default function CreateTask() {
           <Heading>Create Task</Heading>
         </Box>
         <Box my={4} textAlign="left">
-          <form>
+          <form 
+              onSubmit={(e) => e.preventDefault()}>
             <FormControl>
               <FormLabel>Task Name</FormLabel>
-              <Input onChange={(e) => setTaskName(e.target.value)} />
+              <Input value={taskName} onChange={handleTaskNameChange} />
             </FormControl>
             <FormControl mt={6}>
               <FormLabel>Assignee</FormLabel>
-              <Input onChange={(e) => setAssignee(e.target.value)} />
+              <Input value={assignee} onChange={handleAssigneeChange} />
             </FormControl>
-            <Checkbox borderColor="purple" onChange={(e) => setTaskdone(!taskdone)}>
+            <Checkbox
+              value={taskdone}
+              borderColor="purple"
+              onChange={handleTaskdoneChange}
+            >
               Task Done?
             </Checkbox>
-            <Button width="full" mt={4} type="submit" onClick={postData}>
+            <Button
+              bg="purple.300"
+              width="full"
+              mt={4}
+              type="submit"
+              onClick={postData}
+            >
               Submit
             </Button>
           </form>
