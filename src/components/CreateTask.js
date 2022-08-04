@@ -35,20 +35,20 @@ export default function CreateTask() {
     <Flex width="full" align="center" justifyContent="center">
       <Box p={2}>
         <Box textAlign="center">
-          <Heading>Buat Tugas Baru</Heading>
+          <Heading>Create Task</Heading>
         </Box>
         <Box my={4} textAlign="left">
           <form>
             <FormControl>
-              <FormLabel>Nama Tugas</FormLabel>
+              <FormLabel>Task Name</FormLabel>
               <Input onChange={(e) => setTaskName(e.target.value)} />
             </FormControl>
             <FormControl mt={6}>
-              <FormLabel>Untuk</FormLabel>
+              <FormLabel>Assignee</FormLabel>
               <Input onChange={(e) => setAssignee(e.target.value)} />
             </FormControl>
-            <Checkbox onChange={(e) => setTaskdone(!taskdone)}>
-              Sudah Selesai?
+            <Checkbox borderColor="purple" onChange={(e) => setTaskdone(!taskdone)}>
+              Task Done?
             </Checkbox>
             <Button width="full" mt={4} type="submit" onClick={postData}>
               Submit
