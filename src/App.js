@@ -6,10 +6,10 @@ import {
   ColorModeProvider,
   CSSReset,
 } from "@chakra-ui/react";
-import ThemeToggler from "./components/ThemeToggler";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import TaskLists from "./components/TaskLists";
 import UpdateTask from "./components/UpdateTask";
+import Nav from "./components/Navbar";
 
 function App() {
   return (
@@ -17,7 +17,7 @@ function App() {
       <ThemeProvider theme={theme}>
         <ColorModeProvider>
           <CSSReset />
-          <ThemeToggler />
+          <Nav/>
           <Router>
             <Routes>
               <Route exact path="/createtask" element={<CreateTask/>} />

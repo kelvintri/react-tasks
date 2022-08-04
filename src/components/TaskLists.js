@@ -27,11 +27,10 @@ export default function TaskLists() {
       });
   }, []);
   return (
-    <Flex>
-      <Box width="100%" p={2} my={4}>
+    <Flex width="full" align="center" justifyContent="space-between">
+      <Box p={2} my={4} mx='auto'>
         <TableContainer textAlign="center">
           <Table variant="striped" colorScheme="purple">
-            <TableCaption>Imperial to metric conversion factors</TableCaption>
             <Thead>
               <Tr>
                 <Th>Task Name</Th>
@@ -56,7 +55,7 @@ export default function TaskLists() {
                     </Td>
                     <Td></Td>
                     <Td>
-                      <IconButton
+                      <IconButton mr={2}
                         colorScheme="blue"
                         aria-label="update"
                         icon={<EditIcon />}

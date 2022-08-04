@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import {
+  Textarea,
   Flex,
   Box,
   Heading,
@@ -15,19 +16,26 @@ export default function CreateTask() {
   const [taskName, setTaskName] = useState("");
   const [assignee, setAssignee] = useState("");
   const [taskdone, setTaskdone] = useState(false);
-  const url = 'https://young-woodland-74082.herokuapp.com/task';
+
+  const url = "https://young-woodland-74082.herokuapp.com/task";
   const customHeaders = {
-    'content-type': 'application/json',
+    "content-type": "application/json",
   };
   const postData = () => {
     axios
-      .post(url, {
-        taskname: taskName,
-        assignee: assignee,
-        taskdone: taskdone,
-      },customHeaders)
+      .post(
+        url,
+        {
+          taskname: taskName,
+          assignee: assignee,
+          taskdone: taskdone,
+        },
+        customHeaders
+      )
       .then(function (response) {
-        console.log(response.data);
+        if (response.status === 201) {
+          alert("Task Created!");
+        }
       })
       .catch(function (error) {
         console.log(error);
@@ -38,41 +46,42 @@ export default function CreateTask() {
   const handleTaskdoneChange = (e) => setTaskdone(!taskdone);
 
   return (
-    <Flex width="full" align="center" justifyContent="center">
-      <Box p={2}>
-        <Box textAlign="center">
-          <Heading>Create Task</Heading>
+    <>
+      <Flex width="full" align="center" justifyContent="center">
+        <Box p={10}>
+          <Box textAlign="center">
+            <Heading>Create Task</Heading>
+          </Box>
+          <Box my={4} textAlign="left">
+            <form onSubmit={(e) => e.preventDefault()}>
+              <FormControl>
+                <FormLabel>Task Name</FormLabel>
+                <Textarea value={taskName} onChange={handleTaskNameChange} />
+              </FormControl>
+              <FormControl mt={6}>
+                <FormLabel>Assignee</FormLabel>
+                <Input value={assignee} onChange={handleAssigneeChange} />
+              </FormControl>
+              <Checkbox
+                value={taskdone}
+                borderColor="purple"
+                onChange={handleTaskdoneChange}
+              >
+                Task Done?
+              </Checkbox>
+              <Button
+                bg="purple.300"
+                width="full"
+                mt={4}
+                type="submit"
+                onClick={postData}
+              >
+                Submit
+              </Button>
+            </form>
+          </Box>
         </Box>
-        <Box my={4} textAlign="left">
-          <form 
-              onSubmit={(e) => e.preventDefault()}>
-            <FormControl>
-              <FormLabel>Task Name</FormLabel>
-              <Input value={taskName} onChange={handleTaskNameChange} />
-            </FormControl>
-            <FormControl mt={6}>
-              <FormLabel>Assignee</FormLabel>
-              <Input value={assignee} onChange={handleAssigneeChange} />
-            </FormControl>
-            <Checkbox
-              value={taskdone}
-              borderColor="purple"
-              onChange={handleTaskdoneChange}
-            >
-              Task Done?
-            </Checkbox>
-            <Button
-              bg="purple.300"
-              width="full"
-              mt={4}
-              type="submit"
-              onClick={postData}
-            >
-              Submit
-            </Button>
-          </form>
-        </Box>
-      </Box>
-    </Flex>
+      </Flex>
+    </>
   );
 }
