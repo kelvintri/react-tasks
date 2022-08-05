@@ -8,13 +8,13 @@ import {
   Tr,
   Th,
   Td,
-  TableCaption,
   TableContainer,
   Box,
   Flex,
   IconButton,
 } from "@chakra-ui/react";
 import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
+import { Link } from "react-router-dom";
 
 export default function TaskLists() {
   const [APIData, setAPIData] = useState([]);
@@ -26,9 +26,19 @@ export default function TaskLists() {
         setAPIData(resp.data.data.data);
       });
   }, []);
+
+  const setData = (data) => {
+    let { id, taskname, assignee, taskdone} = data;
+    localStorage.setItem("ID", id);
+    localStorage.setItem("Task Name", taskname);
+    localStorage.setItem("Assignee", assignee);
+    localStorage.setItem("Taskdone", JSON.stringify(taskdone));
+    console.log(data);
+  };
+
   return (
     <Flex width="full" align="center" justifyContent="space-between">
-      <Box p={2} my={4} mx='auto'>
+      <Box p={2} my={4} mx="auto">
         <TableContainer textAlign="center">
           <Table variant="striped" colorScheme="purple">
             <Thead>
@@ -37,7 +47,7 @@ export default function TaskLists() {
                 <Th>Assignee</Th>
                 <Th>TaskDone?</Th>
                 <Th>Deadline</Th>
-                <Th>Update</Th>
+                <Th>Action</Th>
               </Tr>
             </Thead>
             <Tbody>
@@ -55,11 +65,15 @@ export default function TaskLists() {
                     </Td>
                     <Td></Td>
                     <Td>
-                      <IconButton mr={2}
-                        colorScheme="blue"
-                        aria-label="update"
-                        icon={<EditIcon />}
-                      />
+                      <Link to={'/updatetask'}>
+                        <IconButton
+                          mr={2}
+                          colorScheme="blue"
+                          aria-label="update"
+                          icon={<EditIcon />}
+                          onClick={() => setData(data)}
+                        />
+                      </Link>
                       <IconButton
                         colorScheme="red"
                         aria-label="delete"

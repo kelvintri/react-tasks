@@ -21,7 +21,7 @@ function App() {
           <Router>
             <Routes>
               <Route exact path="/createtask" element={<CreateTask/>} />
-              <Route exact path="/updatetask/:id" element={<UpdateTask/>} />
+              <Route exact path="/updatetask" element={<UpdateTask/>} />
               <Route exact path="/" element={<TaskLists/>} />
             </Routes>
           </Router>
