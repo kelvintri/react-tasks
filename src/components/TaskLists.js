@@ -25,7 +25,7 @@ export default function TaskLists() {
       .then((resp) => {
         setAPIData(resp.data.data.data);
       });
-  }, []);
+  }, [APIData]);
 
   const setData = (data) => {
     let { id, taskname, assignee, taskdone} = data;
@@ -35,6 +35,10 @@ export default function TaskLists() {
     localStorage.setItem("Taskdone", JSON.stringify(taskdone));
     console.log(data);
   };
+  const onDelete = (id) => {
+    axios.delete(`https://young-woodland-74082.herokuapp.com/task/${id}`)
+  }
+  
 
   return (
     <Flex width="full" align="center" justifyContent="space-between">
@@ -47,7 +51,7 @@ export default function TaskLists() {
                 <Th>Assignee</Th>
                 <Th>TaskDone?</Th>
                 <Th>Deadline</Th>
-                <Th>Action</Th>
+                <Th textAlign="center">Action</Th>
               </Tr>
             </Thead>
             <Tbody>
@@ -78,6 +82,7 @@ export default function TaskLists() {
                         colorScheme="red"
                         aria-label="delete"
                         icon={<DeleteIcon />}
+                      onClick={() => onDelete(data.id)}
                       />
                     </Td>
                   </Tr>

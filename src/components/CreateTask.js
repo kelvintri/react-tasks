@@ -11,8 +11,11 @@ import {
   Checkbox,
 } from "@chakra-ui/react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function CreateTask() {
+  let navigate = useNavigate();
+
   const [taskName, setTaskName] = useState("");
   const [assignee, setAssignee] = useState("");
   const [taskdone, setTaskdone] = useState(false);
@@ -36,6 +39,7 @@ export default function CreateTask() {
         if (response.status === 201) {
           alert("Task Created!");
         }
+        navigate("../", { replace: true });
       })
       .catch(function (error) {
         console.log(error);
