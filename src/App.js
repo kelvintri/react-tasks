@@ -18,15 +18,15 @@ function App() {
       <ThemeProvider theme={theme}>
         <ColorModeProvider>
           <CSSReset />
-          <Nav/>
+          <Nav />
           <Router>
             <Routes>
-              <Route exact path="/createtask" element={<CreateTask/>} />
-              <Route exact path="/updatetask" element={<UpdateTask/>} />
-              <Route exact path="/" element={<TaskLists/>} />
+              <Route exact path="/" element={<TaskLists />} />
+              <Route exact path="/createtask" element={<CreateTask />} />
+              <Route exact path="/updatetask" element={<UpdateTask />} />
             </Routes>
           </Router>
-          <Footer/>
+          <Footer />
         </ColorModeProvider>
       </ThemeProvider>
     </>

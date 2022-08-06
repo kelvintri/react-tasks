@@ -54,8 +54,8 @@ export default function CreateTask() {
 
   return (
     <>
-      <Flex width="full" align="center" justifyContent="center">
-        <Box p={10}>
+      <Flex width="full" align="center" justifyContent="center" pt={20}>
+        <Box >
           <Box textAlign="center">
             <Heading>Create Task</Heading>
           </Box>
@@ -79,14 +79,15 @@ export default function CreateTask() {
                 />
               </FormControl>
               <Checkbox
-                value={taskdone}
+                value={taskdone.toString()}
                 borderColor="purple"
                 onChange={handleTaskdoneChange}
               >
                 Task Done?
               </Checkbox>
               <Button
-                bg="purple.300"
+              colorScheme="blue"
+                bg="purple.400"
                 width="full"
                 mt={4}
                 type="submit"

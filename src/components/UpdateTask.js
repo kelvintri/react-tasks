@@ -53,7 +53,7 @@ export default function UpdateTask() {
   console.log(taskDeadline)
   return (
     <>
-      <Flex width="full" align="center" justifyContent="center">
+      <Flex width="full" align="center" justifyContent="center" pt={10}>
         <Box p={10}>
           <Box textAlign="center">
             <Heading>Update Task</Heading>
@@ -92,6 +92,7 @@ export default function UpdateTask() {
               </Checkbox>
               <Button
                 bg="purple.300"
+                colorScheme="blue"
                 width="full"
                 mt={4}
                 type="submit"

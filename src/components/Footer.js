@@ -7,7 +7,7 @@ import {
   useColorModeValue,
   VisuallyHidden,
 } from "@chakra-ui/react";
-import { FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
+import { FaFacebook,  FaInstagram, FaTwitter } from "react-icons/fa";
 import { ReactNode } from "react";
 
 const SocialButton = ({
@@ -48,9 +48,9 @@ export default function Footer() {
       <Box
         bg={useColorModeValue("gray.50", "gray.900")}
         color={useColorModeValue("gray.700", "gray.200")}
-        position="fixed"
         bottom={0}
         width="100%"
+        position='fixed'
       >
         <Container
           as={Stack}
@@ -60,16 +60,17 @@ export default function Footer() {
           spacing={4}
           justify={{ base: "center", md: "space-between" }}
           align={{ base: "center", md: "center" }}
-        >
-          <Text>© 2022 ABC. All rights reserved</Text>
+        ><Box>
+          <Text textAlign='center'>Made with ❤ by Kelvin</Text>
+        </Box>
           <Stack direction={"row"} spacing={5}>
-            <SocialButton label={"Twitter"} href={"#"}>
+            <SocialButton label={"Twitter"} href={"https://twitter.com/kelvintri7"}>
               <FaTwitter />
             </SocialButton>
-            <SocialButton label={"YouTube"} href={"#"}>
-              <FaYoutube />
+            <SocialButton label={"Facebook"} href={"https://www.facebook.com/ygbacainimonyet"}>
+              <FaFacebook />
             </SocialButton>
-            <SocialButton label={"Instagram"} href={"#"}>
+            <SocialButton label={"Instagram"} href={"https://www.instagram.com/kelvintriy/"}>
               <FaInstagram />
             </SocialButton>
           </Stack>

@@ -22,14 +22,14 @@ export default function Nav() {
   const { colorMode, toggleColorMode } = useColorMode();
   return (
     <>
-      <Box bg={useColorModeValue("gray.100", "gray.900")} px={4} width="100%">
+      <Box  bg={useColorModeValue("gray.100", "gray.900")} px={4} width="100%" zIndex={1000} mb={2} position="fixed">
         <Flex
           h={16}
           alignItems={"center"}
           justifyContent={"space-between"}
           maxW={"9xl"}          
         >
-          <Text >Logo</Text>
+          <Text fontSize='2xl' shadow='xl'>Task Creator</Text>
           <Flex alignItems={"center"}>
             <Stack direction={"row"} spacing={7}>
               <Button onClick={toggleColorMode}>
@@ -62,7 +62,6 @@ export default function Nav() {
                   </Center>
                   <br />
                   <MenuDivider />
-                  <MenuItem>Your Servers</MenuItem>
                   <MenuItem>Account Settings</MenuItem>
                   <MenuItem>Logout</MenuItem>
                 </MenuList>

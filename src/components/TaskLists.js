@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import {
+  Stack,
+  Button,
+  Icon,
   Checkbox,
   Table,
   Thead,
@@ -14,23 +17,24 @@ import {
   IconButton,
   Heading,
 } from "@chakra-ui/react";
-import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
+import { EditIcon, DeleteIcon, CheckIcon } from "@chakra-ui/icons";
 import { Link } from "react-router-dom";
+import { FaPlus } from "react-icons/fa";
 
 export default function TaskLists() {
   const [APIData, setAPIData] = useState([]);
+  
   const url = "https://young-woodland-74082.herokuapp.com/tasks";
 
   useEffect(() => {
-    axios
-      .get(url)
-      .then((resp) => {
-        setAPIData(resp.data.data.data);
-      });
+    axios.get(url).then((resp) => {
+      setAPIData(resp.data.data.data);
+    });
   }, [APIData]);
 
+
   const setData = (data) => {
-    let { id, taskname, assignee, taskdone, deadline} = data;
+    let { id, taskname, assignee, taskdone, deadline } = data;
     localStorage.setItem("ID", id);
     localStorage.setItem("Task Name", taskname);
     localStorage.setItem("Assignee", assignee);
@@ -38,18 +42,30 @@ export default function TaskLists() {
     localStorage.setItem("Task Deadline", deadline);
     console.log(data);
   };
-  const onDelete = (id) => {
-    axios.delete(`https://young-woodland-74082.herokuapp.com/task/${id}`)
+  const deleteData = (id) => {
+    axios.delete(`https://young-woodland-74082.herokuapp.com/task/${id}`);
   }
-  
-
   return (
-    <Flex width="full" align="center" justifyContent="space-between" >
-      <Box p={2} my={4} mx="auto">
-        <Box textAlign='center'>
-        <Heading>Task Lists</Heading>
-        </Box>
-        <TableContainer textAlign="center" display='flex'>
+    <Flex width="full" justifyContent="space-between" pt={20}>
+      <Box mx="auto">
+        <Stack display="flex">
+          <Heading mb={2} textAlign="center">
+            Task List
+          </Heading>
+          <Stack direction={["column", "row"]} spacing="24px">
+            <Link to={"/createtask"}>
+              <Button
+                leftIcon={<Icon as={FaPlus} size="2rem" />}
+                colorScheme="blue"
+                variant="solid"
+                bg="purple.400"
+              >
+                Create Task
+              </Button>
+            </Link>
+          </Stack>
+        </Stack>
+        <TableContainer textAlign="center" width="100%">
           <Table variant="striped" colorScheme="purple">
             <Thead>
               <Tr>
@@ -73,24 +89,31 @@ export default function TaskLists() {
                         isChecked={data.taskdone}
                       />
                     </Td>
+                    <Td textAlign="center">{data.deadline}</Td>
                     <Td>
-                      {data.deadline}
-                    </Td>
-                    <Td>
-                      <Link to={'/updatetask'}>
+                      {data.taskdone === true ? (
                         <IconButton
                           mr={2}
-                          colorScheme="blue"
-                          aria-label="update"
-                          icon={<EditIcon />}
-                          onClick={() => setData(data)}
+                          colorScheme="green"
+                          aria-label="done"
+                          icon={<CheckIcon />}
                         />
-                      </Link>
+                      ) : (
+                        <Link to={"/updatetask"}>
+                          <IconButton
+                            mr={2}
+                            colorScheme="blue"
+                            aria-label="update"
+                            icon={<EditIcon />}
+                            onClick={() => setData(data)}
+                          />
+                        </Link>
+                      )}
                       <IconButton
                         colorScheme="red"
                         aria-label="delete"
                         icon={<DeleteIcon />}
-                      onClick={() => onDelete(data.id)}
+                        onClick={() => deleteData(data.id)}
                       />
                     </Td>
                   </Tr>
