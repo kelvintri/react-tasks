@@ -20,17 +20,19 @@ export default function UpdateTask() {
   const [taskname, setTaskName] = useState("");
   const [assignee, setAssignee] = useState("");
   const [taskdone, setTaskdone] = useState(false);
+  const [taskDeadline, setTaskDeadline] = useState("");
 
   const url = `https://young-woodland-74082.herokuapp.com/task/${id}`;
 
-  console.log(taskdone);
 
   useEffect(() => {
     setID(localStorage.getItem("ID"));
     setTaskName(localStorage.getItem("Task Name"));
     setAssignee(localStorage.getItem("Assignee"));
     setTaskdone(JSON.parse(localStorage.getItem("Taskdone")));
-  }, [setID]);
+    setTaskDeadline(localStorage.getItem("Task Deadline"));
+  }, []);
+
 
   const updateAPIData = () => {
     axios
@@ -38,6 +40,7 @@ export default function UpdateTask() {
         taskname: taskname,
         assignee: assignee,
         taskdone: taskdone,
+        deadline: taskDeadline,
       })
       .then(function (response) {
         navigate("../", { replace: true });
@@ -47,6 +50,7 @@ export default function UpdateTask() {
         console.log(error);
       });
   };
+  console.log(taskDeadline)
   return (
     <>
       <Flex width="full" align="center" justifyContent="center">
@@ -68,6 +72,14 @@ export default function UpdateTask() {
                 <Input
                   value={assignee}
                   onChange={(e) => setAssignee(e.target.value)}
+                />
+              </FormControl>
+              <FormControl mt={6}>
+                <FormLabel>Deadline</FormLabel>
+                <Input
+                  value={taskDeadline}
+                  type="date"
+                  onChange={(e) => setTaskDeadline(e.target.value)}
                 />
               </FormControl>
               <Checkbox

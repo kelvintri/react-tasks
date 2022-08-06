@@ -12,27 +12,30 @@ import {
   Box,
   Flex,
   IconButton,
+  Heading,
 } from "@chakra-ui/react";
 import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
 import { Link } from "react-router-dom";
 
 export default function TaskLists() {
   const [APIData, setAPIData] = useState([]);
+  const url = "https://young-woodland-74082.herokuapp.com/tasks";
 
   useEffect(() => {
     axios
-      .get("https://young-woodland-74082.herokuapp.com/tasks")
+      .get(url)
       .then((resp) => {
         setAPIData(resp.data.data.data);
       });
   }, [APIData]);
 
   const setData = (data) => {
-    let { id, taskname, assignee, taskdone} = data;
+    let { id, taskname, assignee, taskdone, deadline} = data;
     localStorage.setItem("ID", id);
     localStorage.setItem("Task Name", taskname);
     localStorage.setItem("Assignee", assignee);
     localStorage.setItem("Taskdone", JSON.stringify(taskdone));
+    localStorage.setItem("Task Deadline", deadline);
     console.log(data);
   };
   const onDelete = (id) => {
@@ -41,9 +44,12 @@ export default function TaskLists() {
   
 
   return (
-    <Flex width="full" align="center" justifyContent="space-between">
+    <Flex width="full" align="center" justifyContent="space-between" >
       <Box p={2} my={4} mx="auto">
-        <TableContainer textAlign="center">
+        <Box textAlign='center'>
+        <Heading>Task Lists</Heading>
+        </Box>
+        <TableContainer textAlign="center" display='flex'>
           <Table variant="striped" colorScheme="purple">
             <Thead>
               <Tr>
@@ -67,7 +73,9 @@ export default function TaskLists() {
                         isChecked={data.taskdone}
                       />
                     </Td>
-                    <Td></Td>
+                    <Td>
+                      {data.deadline}
+                    </Td>
                     <Td>
                       <Link to={'/updatetask'}>
                         <IconButton

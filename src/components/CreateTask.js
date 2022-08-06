@@ -19,6 +19,7 @@ export default function CreateTask() {
   const [taskName, setTaskName] = useState("");
   const [assignee, setAssignee] = useState("");
   const [taskdone, setTaskdone] = useState(false);
+  const [deadline, setDeadline] = useState("");
 
   const url = "https://young-woodland-74082.herokuapp.com/task";
   const customHeaders = {
@@ -32,6 +33,7 @@ export default function CreateTask() {
           taskname: taskName,
           assignee: assignee,
           taskdone: taskdone,
+          deadline: deadline,
         },
         customHeaders
       )
@@ -48,6 +50,7 @@ export default function CreateTask() {
   const handleTaskNameChange = (e) => setTaskName(e.target.value);
   const handleAssigneeChange = (e) => setAssignee(e.target.value);
   const handleTaskdoneChange = (e) => setTaskdone(!taskdone);
+  const handleTaskDeadlineChange = (e) => setDeadline(e.target.value);
 
   return (
     <>
@@ -65,6 +68,15 @@ export default function CreateTask() {
               <FormControl mt={6}>
                 <FormLabel>Assignee</FormLabel>
                 <Input value={assignee} onChange={handleAssigneeChange} />
+              </FormControl>
+              <FormControl mt={6}>
+                <FormLabel>Deadline</FormLabel>
+                <Input
+                  value={deadline}
+                  onChange={handleTaskDeadlineChange}
+                  size="md"
+                  type="date"
+                />
               </FormControl>
               <Checkbox
                 value={taskdone}
