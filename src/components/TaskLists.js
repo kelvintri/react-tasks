@@ -23,15 +23,15 @@ import { FaPlus } from "react-icons/fa";
 
 export default function TaskLists() {
   const [APIData, setAPIData] = useState([]);
-  
+  const [requestData, setRequestData] = useState(new Date());
+
   const url = "https://young-woodland-74082.herokuapp.com/tasks";
 
   useEffect(() => {
     axios.get(url).then((resp) => {
       setAPIData(resp.data.data.data);
     });
-  }, [APIData]);
-
+  }, [requestData]);
 
   const setData = (data) => {
     let { id, taskname, assignee, taskdone, deadline } = data;
@@ -43,8 +43,15 @@ export default function TaskLists() {
     console.log(data);
   };
   const deleteData = (id) => {
-    axios.delete(`https://young-woodland-74082.herokuapp.com/task/${id}`);
-  }
+    axios
+      .delete(`https://young-woodland-74082.herokuapp.com/task/${id}`)
+      .then((resp) => {
+        console.log(resp);
+        alert("Task Deleted");
+        setRequestData(new Date());
+      });
+  };
+  console.log(APIData);
   return (
     <Flex width="full" justifyContent="space-between" pt={20}>
       <Box mx="auto">
@@ -77,9 +84,9 @@ export default function TaskLists() {
               </Tr>
             </Thead>
             <Tbody>
-              {APIData.map((data) => {
+              {APIData.map((data, index) => {
                 return (
-                  <Tr key={data.id}>
+                  <Tr key={data.id} >
                     <Td>{data.taskname}</Td>
                     <Td>{data.assignee}</Td>
                     <Td>
