@@ -20,6 +20,11 @@ export default function CreateTask() {
   const [assignee, setAssignee] = useState("");
   const [taskdone, setTaskdone] = useState(false);
   const [deadline, setDeadline] = useState("");
+  const [isValid, setIsValid] = useState(false);
+
+
+
+
 
   const url = "https://young-woodland-74082.herokuapp.com/task";
   const customHeaders = {
@@ -47,6 +52,15 @@ export default function CreateTask() {
         console.log(error);
       });
   };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (taskName === "" || assignee === "") {
+      setIsValid(false);
+    } else {
+      postData();
+    }
+  }
   const handleTaskNameChange = (e) => setTaskName(e.target.value);
   const handleAssigneeChange = (e) => setAssignee(e.target.value);
   const handleTaskdoneChange = (e) => setTaskdone(!taskdone);
@@ -68,11 +82,11 @@ export default function CreateTask() {
           <Heading>Create Task</Heading>
         </Box>
         <Box textAlign="left">
-          <FormControl>
+          <FormControl mt={2} isRequired  isInvalid={!isValid}>
             <FormLabel>Task Name</FormLabel>
             <Textarea value={taskName} onChange={handleTaskNameChange} />
           </FormControl>
-          <FormControl mt={6}>
+          <FormControl mt={6} isRequired>
             <FormLabel>Assignee</FormLabel>
             <Input value={assignee} onChange={handleAssigneeChange} />
           </FormControl>
@@ -100,7 +114,10 @@ export default function CreateTask() {
             width="full"
             mt={4}
             type="submit"
-            onClick={postData}
+            onClick={handleSubmit}
+            isLoading={false}
+            isInvalid={!isValid}
+            isDisabled={(taskName === "" || assignee === "")}
           >
             Submit
           </Button>

@@ -101,8 +101,7 @@ export default function TaskLists() {
               </Tr>
             </Thead>
             <Tbody>
-              {
-              APIData?.map((data) => {
+              {APIData?.map((data) => {
                 return (
                   <Tr key={data.id}>
                     <Td>{data.taskname}</Td>

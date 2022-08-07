@@ -21,9 +21,10 @@ export default function UpdateTask() {
   const [assignee, setAssignee] = useState("");
   const [taskdone, setTaskdone] = useState(false);
   const [taskDeadline, setTaskDeadline] = useState("");
+  const [isValid, setIsValid] = useState(false);
+
 
   const url = `https://young-woodland-74082.herokuapp.com/task/${id}`;
-
 
   useEffect(() => {
     setID(localStorage.getItem("ID"));
@@ -32,7 +33,6 @@ export default function UpdateTask() {
     setTaskdone(JSON.parse(localStorage.getItem("Taskdone")));
     setTaskDeadline(localStorage.getItem("Task Deadline"));
   }, []);
-
 
   const updateAPIData = () => {
     axios
@@ -50,64 +50,74 @@ export default function UpdateTask() {
         console.log(error);
       });
   };
-  console.log(taskDeadline)
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (taskname === "" || assignee === "") {
+      setIsValid(false);
+    } else {
+      updateAPIData();
+    }
+  };
+
   return (
     <>
-    <VStack
-    as="form"
-    mx="auto"
-    w={{ base: "90%", md: 500 }}
-    pt={10}
-    justifyContent="center"
-    onSubmit={(e) => e.preventDefault()}
-  >
-      {/* <Flex width="full" align="center" justifyContent="center" pt={10}>
+      <VStack
+        as="form"
+        mx="auto"
+        w={{ base: "90%", md: 500 }}
+        pt={10}
+        justifyContent="center"
+        onSubmit={(e) => e.preventDefault()}
+      >
+        {/* <Flex width="full" align="center" justifyContent="center" pt={10}>
         <Box p={10}> */}
-          <Box textAlign="center" pt={10} mb={5}>
-            <Heading>Update Task</Heading>
-          </Box>
-          <Box my={4} textAlign="left">
-              <FormControl>
-                <FormLabel>Task Name</FormLabel>
-                <Textarea
-                  value={taskname}
-                  onChange={(e) => setTaskName(e.target.value)}
-                />
-              </FormControl>
-              <FormControl mt={6}>
-                <FormLabel>Assignee</FormLabel>
-                <Input
-                  value={assignee}
-                  onChange={(e) => setAssignee(e.target.value)}
-                />
-              </FormControl>
-              <FormControl mt={6}>
-                <FormLabel>Deadline</FormLabel>
-                <Input
-                  value={taskDeadline}
-                  type="date"
-                  onChange={(e) => setTaskDeadline(e.target.value)}
-                />
-              </FormControl>
-              <Checkbox
-                value={taskdone}
-                isChecked={taskdone}
-                onChange={(e) => setTaskdone(e.target.checked)}
-                borderColor="purple"
-              >
-                Task Done?
-              </Checkbox>
-              <Button
-                bg="purple.300"
-                colorScheme="blue"
-                width="full"
-                mt={4}
-                type="submit"
-                onClick={updateAPIData}
-              >
-                Update
-              </Button>
-          </Box>
+        <Box textAlign="center" pt={10} mb={5}>
+          <Heading>Update Task</Heading>
+        </Box>
+        <Box my={4} textAlign="left">
+          <FormControl isRequired>
+            <FormLabel>Task Name</FormLabel>
+            <Textarea
+              value={taskname}
+              onChange={(e) => setTaskName(e.target.value)}
+            />
+          </FormControl>
+          <FormControl mt={6} isRequired>
+            <FormLabel>Assignee</FormLabel>
+            <Input
+              value={assignee}
+              onChange={(e) => setAssignee(e.target.value)}
+            />
+          </FormControl>
+          <FormControl mt={6}>
+            <FormLabel>Deadline</FormLabel>
+            <Input
+              value={taskDeadline}
+              type="date"
+              onChange={(e) => setTaskDeadline(e.target.value)}
+            />
+          </FormControl>
+          <Checkbox
+            value={taskdone}
+            isChecked={taskdone}
+            onChange={(e) => setTaskdone(e.target.checked)}
+            borderColor="purple"
+          >
+            Task Done?
+          </Checkbox>
+          <Button
+            bg="purple.300"
+            colorScheme="blue"
+            width="full"
+            mt={4}
+            type="submit"
+            onClick={handleSubmit}
+            isInvalid={!isValid}
+          >
+            Update
+          </Button>
+        </Box>
         {/* </Box>
       </Flex> */}
       </VStack>
