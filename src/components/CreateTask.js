@@ -64,7 +64,7 @@ export default function CreateTask() {
       >
         {/* <Flex width="full" align="center" justifyContent="center" pt={20}>
           <Box > */}
-        <Box textAlign="center" pt={10}>
+        <Box textAlign="center" pt={10} mb={5}>
           <Heading>Create Task</Heading>
         </Box>
         <Box textAlign="left">

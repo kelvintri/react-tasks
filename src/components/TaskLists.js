@@ -25,6 +25,7 @@ export default function TaskLists() {
   const [APIData, setAPIData] = useState([]);
   const [requestData, setRequestData] = useState(new Date());
 
+  
   const url = "https://young-woodland-74082.herokuapp.com/tasks";
 
   useEffect(() => {
@@ -42,6 +43,7 @@ export default function TaskLists() {
     localStorage.setItem("Task Deadline", deadline);
     console.log(data);
   };
+
   const deleteData = (id) => {
     axios
       .delete(`https://young-woodland-74082.herokuapp.com/task/${id}`)
@@ -51,6 +53,22 @@ export default function TaskLists() {
         setRequestData(new Date());
       });
   };
+
+  const setTaskdone = (id) => {
+    axios
+      .put(`https://young-woodland-74082.herokuapp.com/task/${id}/done`, {
+        taskdone: true,
+      })
+      .then((resp) => {
+        console.log(resp);
+        alert("Task Done");
+        setRequestData(new Date());
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <Flex width="full" justifyContent="space-between" pt={20}>
       <Box mx="auto">
@@ -72,7 +90,7 @@ export default function TaskLists() {
           </Stack>
         </Stack>
         <TableContainer textAlign="center" width="100%">
-          <Table variant="striped" colorScheme="purple">
+          <Table variant="striped" colorScheme="purple" size="lg">
             <Thead>
               <Tr>
                 <Th>Task Name</Th>
@@ -83,17 +101,30 @@ export default function TaskLists() {
               </Tr>
             </Thead>
             <Tbody>
-              {APIData.map((data) => {
+              {
+              APIData?.map((data) => {
                 return (
-                  <Tr key={data.id} >
+                  <Tr key={data.id}>
                     <Td>{data.taskname}</Td>
                     <Td>{data.assignee}</Td>
-                    <Td>
-                      <Checkbox
-                        borderColor="purple"
-                        colorScheme="blue"
-                        isChecked={data.taskdone}
-                      />
+                    <Td textAlign="center">
+                      {data.taskdone ? (
+                        <Checkbox
+                          borderColor="purple"
+                          colorScheme="blue"
+                          isChecked={data.taskdone}
+                          isDisabled
+                        />
+                      ) : (
+                        <Checkbox
+                          borderColor="purple"
+                          colorScheme="blue"
+                          isChecked={data.taskdone}
+                          onChange={(e) => {
+                            setTaskdone(data.id);
+                          }}
+                        />
+                      )}
                     </Td>
                     <Td textAlign="center">{data.deadline}</Td>
                     <Td>

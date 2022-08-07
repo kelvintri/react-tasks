@@ -63,11 +63,10 @@ export default function UpdateTask() {
   >
       {/* <Flex width="full" align="center" justifyContent="center" pt={10}>
         <Box p={10}> */}
-          <Box textAlign="center" pt={10}>
+          <Box textAlign="center" pt={10} mb={5}>
             <Heading>Update Task</Heading>
           </Box>
           <Box my={4} textAlign="left">
-            <form onSubmit={(e) => e.preventDefault()}>
               <FormControl>
                 <FormLabel>Task Name</FormLabel>
                 <Textarea
@@ -108,7 +107,6 @@ export default function UpdateTask() {
               >
                 Update
               </Button>
-            </form>
           </Box>
         {/* </Box>
       </Flex> */}
