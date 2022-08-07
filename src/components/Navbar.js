@@ -29,7 +29,7 @@ export default function Nav() {
           justifyContent={"space-between"}
           maxW={"9xl"}          
         >
-          <Text fontSize='2xl' shadow='xl'>Task Creator</Text>
+          <Text fontSize='2xl'>Task Creator</Text>
           <Flex alignItems={"center"}>
             <Stack direction={"row"} spacing={7}>
               <Button onClick={toggleColorMode}>

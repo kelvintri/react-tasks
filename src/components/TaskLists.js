@@ -51,7 +51,6 @@ export default function TaskLists() {
         setRequestData(new Date());
       });
   };
-  console.log(APIData);
   return (
     <Flex width="full" justifyContent="space-between" pt={20}>
       <Box mx="auto">
@@ -84,7 +83,7 @@ export default function TaskLists() {
               </Tr>
             </Thead>
             <Tbody>
-              {APIData.map((data, index) => {
+              {APIData.map((data) => {
                 return (
                   <Tr key={data.id} >
                     <Td>{data.taskname}</Td>

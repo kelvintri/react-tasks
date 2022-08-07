@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import {
   Textarea,
-  Flex,
+  VStack,
   Box,
   Heading,
   FormControl,
@@ -53,9 +53,17 @@ export default function UpdateTask() {
   console.log(taskDeadline)
   return (
     <>
-      <Flex width="full" align="center" justifyContent="center" pt={10}>
-        <Box p={10}>
-          <Box textAlign="center">
+    <VStack
+    as="form"
+    mx="auto"
+    w={{ base: "90%", md: 500 }}
+    pt={10}
+    justifyContent="center"
+    onSubmit={(e) => e.preventDefault()}
+  >
+      {/* <Flex width="full" align="center" justifyContent="center" pt={10}>
+        <Box p={10}> */}
+          <Box textAlign="center" pt={10}>
             <Heading>Update Task</Heading>
           </Box>
           <Box my={4} textAlign="left">
@@ -102,8 +110,9 @@ export default function UpdateTask() {
               </Button>
             </form>
           </Box>
-        </Box>
-      </Flex>
+        {/* </Box>
+      </Flex> */}
+      </VStack>
     </>
   );
 }

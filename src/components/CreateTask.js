@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import {
   Textarea,
-  Flex,
   Box,
   Heading,
   FormControl,
@@ -9,6 +8,7 @@ import {
   Input,
   Button,
   Checkbox,
+  VStack,
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -54,51 +54,60 @@ export default function CreateTask() {
 
   return (
     <>
-      <Flex width="full" align="center" justifyContent="center" pt={20}>
-        <Box >
-          <Box textAlign="center">
-            <Heading>Create Task</Heading>
-          </Box>
-          <Box my={4} textAlign="left">
-            <form onSubmit={(e) => e.preventDefault()}>
-              <FormControl>
-                <FormLabel>Task Name</FormLabel>
-                <Textarea value={taskName} onChange={handleTaskNameChange} />
-              </FormControl>
-              <FormControl mt={6}>
-                <FormLabel>Assignee</FormLabel>
-                <Input value={assignee} onChange={handleAssigneeChange} />
-              </FormControl>
-              <FormControl mt={6}>
-                <FormLabel>Deadline</FormLabel>
-                <Input
-                  value={deadline}
-                  onChange={handleTaskDeadlineChange}
-                  size="md"
-                  type="date"
-                />
-              </FormControl>
-              <Checkbox
-                value={taskdone.toString()}
-                borderColor="purple"
-                onChange={handleTaskdoneChange}
-              >
-                Task Done?
-              </Checkbox>
-              <Button
-              colorScheme="blue"
-                bg="purple.400"
-                width="full"
-                mt={4}
-                type="submit"
-                onClick={postData}
-              >
-                Submit
-              </Button>
-            </form>
-          </Box>
+      <VStack
+        as="form"
+        mx="auto"
+        w={{ base: "90%", md: 500 }}
+        pt={10}
+        justifyContent="center"
+        onSubmit={(e) => e.preventDefault()}
+      >
+        {/* <Flex width="full" align="center" justifyContent="center" pt={20}>
+          <Box > */}
+        <Box textAlign="center" pt={10}>
+          <Heading>Create Task</Heading>
         </Box>
-      </Flex>
+        <Box textAlign="left">
+          <FormControl>
+            <FormLabel>Task Name</FormLabel>
+            <Textarea value={taskName} onChange={handleTaskNameChange} />
+          </FormControl>
+          <FormControl mt={6}>
+            <FormLabel>Assignee</FormLabel>
+            <Input value={assignee} onChange={handleAssigneeChange} />
+          </FormControl>
+          <FormControl mt={6}>
+            <FormLabel>Deadline</FormLabel>
+            <Input
+              value={deadline}
+              onChange={handleTaskDeadlineChange}
+              size="md"
+              type="date"
+            />
+          </FormControl>
+          <Checkbox
+            mt={6}
+            justifyContent="center"
+            value={taskdone.toString()}
+            borderColor="purple"
+            onChange={handleTaskdoneChange}
+          >
+            Task Done?
+          </Checkbox>
+          <Button
+            colorScheme="blue"
+            bg="purple.400"
+            width="full"
+            mt={4}
+            type="submit"
+            onClick={postData}
+          >
+            Submit
+          </Button>
+        </Box>
+      </VStack>
+      {/* </Box>
+      </Flex> */}
     </>
   );
 }
