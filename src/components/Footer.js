@@ -8,16 +8,12 @@ import {
   VisuallyHidden,
 } from "@chakra-ui/react";
 import { FaFacebook,  FaInstagram, FaTwitter } from "react-icons/fa";
-import { ReactNode } from "react";
+
 
 const SocialButton = ({
   children,
   label,
   href,
-}: {
-  children: ReactNode,
-  label: string,
-  href: string,
 }) => {
   return (
     <chakra.button
@@ -45,7 +41,7 @@ const SocialButton = ({
 export default function Footer() {
   return (
     <>
-      <Box
+      <Box overflow='hidden'
         bg={useColorModeValue("gray.50", "gray.900")}
         color={useColorModeValue("gray.700", "gray.200")}
         bottom={0}

@@ -22,7 +22,7 @@ export default function Nav() {
   const { colorMode, toggleColorMode } = useColorMode();
   return (
     <>
-      <Box  bg={useColorModeValue("gray.100", "gray.900")} px={4} width="100%" zIndex={1000} mb={2} position="fixed">
+      <Box overflow='hidden' bg={useColorModeValue("gray.100", "gray.900")} px={4} width="100%" zIndex={1000} position="fixed">
         <Flex
           h={16}
           alignItems={"center"}

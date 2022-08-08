@@ -73,7 +73,7 @@ export default function TaskLists() {
   };
 
   return (
-    <Flex width="full" justifyContent="space-between" pt={20}>
+    <Flex width="full" justifyContent="space-between" pt={20} position='relative' mb="70px">
       <Box mx="auto">
         <Stack display="flex">
           <Heading mb={2} textAlign="center">
