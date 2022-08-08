@@ -17,6 +17,7 @@ import {
   Flex,
   IconButton,
   Heading,
+  useToast
 } from "@chakra-ui/react";
 import { EditIcon, DeleteIcon, CheckIcon } from "@chakra-ui/icons";
 import { Link } from "react-router-dom";
@@ -27,7 +28,7 @@ export default function TaskLists() {
   const [requestData, setRequestData] = useState(new Date());
   const [isLoading, setIsLoading] = useState(true);
 
-  
+  const toast = useToast();
   const url = "https://young-woodland-74082.herokuapp.com/tasks";
 
   useEffect(() => {
@@ -44,15 +45,19 @@ export default function TaskLists() {
     localStorage.setItem("Assignee", assignee);
     localStorage.setItem("Taskdone", JSON.stringify(taskdone));
     localStorage.setItem("Task Deadline", deadline);
-    console.log(data);
   };
 
   const deleteData = (id) => {
     axios
       .delete(`https://young-woodland-74082.herokuapp.com/task/${id}`)
       .then((resp) => {
-        console.log(resp);
-        alert("Task Deleted");
+        toast({
+          title: "Task Deleted!",
+          description: "Task has been deleted successfully!",
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+        });
         setRequestData(new Date());
       });
   };
@@ -63,8 +68,13 @@ export default function TaskLists() {
         taskdone: true,
       })
       .then((resp) => {
-        console.log(resp);
-        alert("Task Done");
+        toast({
+          title: "Task marked as done!",
+          description: "Task has been marked as done successfully!",
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+        });
         setRequestData(new Date());
       })
       .catch((err) => {

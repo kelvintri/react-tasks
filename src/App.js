@@ -1,6 +1,7 @@
 import "./App.css";
 import CreateTask from "./components/CreateTask";
 import {
+  ChakraProvider,
   ThemeProvider,
   theme,
   ColorModeProvider,
@@ -15,20 +16,22 @@ import Footer from "./components/Footer";
 function App() {
   return (
     <>
-      <ThemeProvider theme={theme}>
-        <ColorModeProvider>
-          <CSSReset />
-          <Nav />
-          <Router>
-            <Routes>
-              <Route exact path="/" element={<TaskLists />} />
-              <Route exact path="/createtask" element={<CreateTask />} />
-              <Route exact path="/updatetask" element={<UpdateTask />} />
-            </Routes>
-          </Router>
-          <Footer />
-        </ColorModeProvider>
-      </ThemeProvider>
+      <ChakraProvider>
+        <ThemeProvider theme={theme}>
+          <ColorModeProvider>
+            <CSSReset />
+            <Nav />
+            <Router>
+              <Routes>
+                <Route exact path="/" element={<TaskLists />} />
+                <Route exact path="/createtask" element={<CreateTask />} />
+                <Route exact path="/updatetask" element={<UpdateTask />} />
+              </Routes>
+            </Router>
+            <Footer />
+          </ColorModeProvider>
+        </ThemeProvider>
+      </ChakraProvider>
     </>
   );
 }

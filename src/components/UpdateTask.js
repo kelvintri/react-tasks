@@ -9,6 +9,7 @@ import {
   Input,
   Button,
   Checkbox,
+  useToast,
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -24,6 +25,7 @@ export default function UpdateTask() {
   const [isValid, setIsValid] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
+  const toast = useToast();
   const url = `https://young-woodland-74082.herokuapp.com/task/${id}`;
 
   useEffect(() => {
@@ -43,8 +45,14 @@ export default function UpdateTask() {
         deadline: taskDeadline,
       })
       .then(function (response) {
+        toast({
+          title: "Task Updated!",
+          description: "Task has been updated successfully!",
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+        });
         navigate("../", { replace: true });
-        console.log(response);
       })
       .catch(function (error) {
         console.log(error);

@@ -9,6 +9,7 @@ import {
   Button,
   Checkbox,
   VStack,
+  useToast,
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -23,9 +24,7 @@ export default function CreateTask() {
   const [isValid, setIsValid] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-
-
-
+  const toast = useToast();
   const url = "https://young-woodland-74082.herokuapp.com/task";
   const customHeaders = {
     "content-type": "application/json",
@@ -40,11 +39,17 @@ export default function CreateTask() {
           taskdone: taskdone,
           deadline: deadline,
         },
-        customHeaders,
+        customHeaders
       )
       .then(function (response) {
         if (response.status === 201) {
-          alert("Task Created!");
+          toast({
+            title: "Task Created!",
+            description: "Task has been created successfully!",
+            status: "success",
+            duration: 5000,
+            isClosable: true,
+          });
         }
         navigate("../", { replace: true });
       })
@@ -60,7 +65,7 @@ export default function CreateTask() {
     } else {
       postData();
     }
-  }
+  };
   const handleTaskNameChange = (e) => setTaskName(e.target.value);
   const handleAssigneeChange = (e) => setAssignee(e.target.value);
   const handleTaskdoneChange = (e) => setTaskdone(!taskdone);
@@ -116,8 +121,8 @@ export default function CreateTask() {
             type="submit"
             onClick={handleSubmit}
             isLoading={isLoading}
-            loadingText='Creating...'
-            isDisabled={(taskName === "" || assignee === "")}
+            loadingText="Creating..."
+            isDisabled={taskName === "" || assignee === ""}
           >
             Submit
           </Button>
