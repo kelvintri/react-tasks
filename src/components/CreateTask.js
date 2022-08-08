@@ -9,6 +9,7 @@ import {
   Button,
   Checkbox,
   VStack,
+  useToast
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -20,8 +21,7 @@ export default function CreateTask() {
   const [assignee, setAssignee] = useState("");
   const [taskdone, setTaskdone] = useState(false);
   const [deadline, setDeadline] = useState("");
-  const [isValid, setIsValid] = useState(false);
-
+  const [isLoading, setIsLoading] = useState(false);
 
 
 
@@ -40,7 +40,7 @@ export default function CreateTask() {
           taskdone: taskdone,
           deadline: deadline,
         },
-        customHeaders
+        customHeaders,
       )
       .then(function (response) {
         if (response.status === 201) {
@@ -54,7 +54,7 @@ export default function CreateTask() {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    setIsLoading(true);
     if (taskName === "" || assignee === "") {
       setIsValid(false);
     } else {
@@ -82,7 +82,7 @@ export default function CreateTask() {
           <Heading>Create Task</Heading>
         </Box>
         <Box textAlign="left">
-          <FormControl mt={2} isRequired  isInvalid={!isValid}>
+          <FormControl mt={2} isRequired >
             <FormLabel>Task Name</FormLabel>
             <Textarea value={taskName} onChange={handleTaskNameChange} />
           </FormControl>
@@ -115,8 +115,8 @@ export default function CreateTask() {
             mt={4}
             type="submit"
             onClick={handleSubmit}
-            isLoading={false}
-            isInvalid={!isValid}
+            isLoading={isLoading}
+            loadingText='Creating Task'
             isDisabled={(taskName === "" || assignee === "")}
           >
             Submit
