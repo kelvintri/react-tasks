@@ -73,7 +73,7 @@ export default function TaskLists() {
   };
 
   return (
-    <Flex width="full" justifyContent="space-between" pt={20} position='relative' mb="70px">
+    <Flex width="full" justifyContent="space-between" pt={20} position='relative' mb="70">
       <Box mx="auto">
         <Stack display="flex">
           <Heading mb={2} textAlign="center">
@@ -111,19 +111,18 @@ export default function TaskLists() {
                   </Td>
                 </Tr>
               ) : (
-                APIData?.map((data) => {
+                APIData?.sort((a,b) => a.taskdone - b.taskdone  || a.deadline.localeCompare(b.deadline)).map((data) => {
                   return (
                     <Tr key={data.id}>
                       <Td>{data.taskname}</Td>
                       <Td>{data.assignee}</Td>
                       <Td textAlign="center">
                         {data.taskdone ? (
-                          <Checkbox
-                            borderColor="purple"
-                            colorScheme="blue"
-                            isChecked={data.taskdone}
-                            isDisabled
-                          />
+                          <IconButton
+                          colorScheme="green"
+                          aria-label="done"
+                          icon={<CheckIcon />}
+                        />
                         ) : (
                           <Checkbox
                             borderColor="purple"
