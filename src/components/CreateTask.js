@@ -21,6 +21,7 @@ export default function CreateTask() {
   const [assignee, setAssignee] = useState("");
   const [taskdone, setTaskdone] = useState(false);
   const [deadline, setDeadline] = useState("");
+  const [isValid, setIsValid] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
 
