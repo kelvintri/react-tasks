@@ -22,7 +22,7 @@ export default function UpdateTask() {
   const [taskdone, setTaskdone] = useState(false);
   const [taskDeadline, setTaskDeadline] = useState("");
   const [isValid, setIsValid] = useState(false);
-
+  const [isLoading, setIsLoading] = useState(false);
 
   const url = `https://young-woodland-74082.herokuapp.com/task/${id}`;
 
@@ -52,6 +52,7 @@ export default function UpdateTask() {
   };
 
   const handleSubmit = (e) => {
+    setIsLoading(true);
     e.preventDefault();
     if (taskname === "" || assignee === "") {
       setIsValid(false);
@@ -76,7 +77,7 @@ export default function UpdateTask() {
           <Heading>Update Task</Heading>
         </Box>
         <Box my={4} textAlign="left">
-          <FormControl isRequired>
+          <FormControl isRequired isInvalid={isValid}>
             <FormLabel>Task Name</FormLabel>
             <Textarea
               value={taskname}
@@ -112,8 +113,10 @@ export default function UpdateTask() {
             width="full"
             mt={4}
             type="submit"
+            isLoading={isLoading}
+            loadingText="Updating..."
             onClick={handleSubmit}
-            isInvalid={!isValid}
+            isDisabled={(taskname === "" || assignee === "") && !isValid}
           >
             Update
           </Button>

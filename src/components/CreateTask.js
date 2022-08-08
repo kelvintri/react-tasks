@@ -9,7 +9,6 @@ import {
   Button,
   Checkbox,
   VStack,
-  useToast
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -83,11 +82,11 @@ export default function CreateTask() {
           <Heading>Create Task</Heading>
         </Box>
         <Box textAlign="left">
-          <FormControl mt={2} isRequired >
+          <FormControl mt={2} isRequired isInvalid={isValid}>
             <FormLabel>Task Name</FormLabel>
             <Textarea value={taskName} onChange={handleTaskNameChange} />
           </FormControl>
-          <FormControl mt={6} isRequired>
+          <FormControl mt={6} isRequired isInvalid={isValid}>
             <FormLabel>Assignee</FormLabel>
             <Input value={assignee} onChange={handleAssigneeChange} />
           </FormControl>
@@ -117,7 +116,7 @@ export default function CreateTask() {
             type="submit"
             onClick={handleSubmit}
             isLoading={isLoading}
-            loadingText='Creating Task'
+            loadingText='Creating...'
             isDisabled={(taskName === "" || assignee === "")}
           >
             Submit

@@ -118,11 +118,7 @@ export default function TaskLists() {
                       <Td>{data.assignee}</Td>
                       <Td textAlign="center">
                         {data.taskdone ? (
-                          <IconButton
-                          colorScheme="green"
-                          aria-label="done"
-                          icon={<CheckIcon />}
-                        />
+                          <CheckIcon color="green.500"/>
                         ) : (
                           <Checkbox
                             borderColor="purple"
@@ -141,12 +137,12 @@ export default function TaskLists() {
                       )}
                       <Td>
                         {data.taskdone === true ? (
-                          <IconButton
-                            mr={2}
-                            colorScheme="green"
-                            aria-label="done"
-                            icon={<CheckIcon />}
-                          />
+                            <IconButton
+                              mr={2}
+                              colorScheme="green"
+                              aria-label="done"
+                              icon={<CheckIcon />}
+                            />
                         ) : (
                           <Link to={"/updatetask"}>
                             <IconButton
