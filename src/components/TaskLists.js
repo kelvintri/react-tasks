@@ -17,7 +17,14 @@ import {
   Flex,
   IconButton,
   Heading,
-  useToast
+  useToast,
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogContent,
+  AlertDialogOverlay,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { EditIcon, DeleteIcon, CheckIcon } from "@chakra-ui/icons";
 import { Link } from "react-router-dom";
@@ -27,6 +34,9 @@ export default function TaskLists() {
   const [APIData, setAPIData] = useState([]);
   const [requestData, setRequestData] = useState(new Date());
   const [isLoading, setIsLoading] = useState(true);
+  const [deleteId, setDeleteId] = useState(null);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const cancelRef = React.useRef();
 
   const toast = useToast();
   const url = "https://young-woodland-74082.herokuapp.com/tasks";
@@ -83,7 +93,13 @@ export default function TaskLists() {
   };
 
   return (
-    <Flex width="full" justifyContent="space-between" pt={20} position='relative' mb="70">
+    <Flex
+      width="full"
+      justifyContent="space-between"
+      pt={20}
+      position="relative"
+      mb="70"
+    >
       <Box mx="auto">
         <Stack display="flex">
           <Heading mb={2} textAlign="center">
@@ -117,18 +133,29 @@ export default function TaskLists() {
               {isLoading ? (
                 <Tr>
                   <Td colSpan="5">
-                    <CircularProgress display='flex' justifyContent='center' isIndeterminate color="purple.500" thickness='10px' size='40px'/>
+                    <CircularProgress
+                      display="flex"
+                      justifyContent="center"
+                      isIndeterminate
+                      color="purple.500"
+                      thickness="10px"
+                      size="40px"
+                    />
                   </Td>
                 </Tr>
               ) : (
-                APIData?.sort((a,b) => a.taskdone - b.taskdone  || a.deadline.localeCompare(b.deadline)).map((data) => {
+                APIData?.sort(
+                  (a, b) =>
+                    a.taskdone - b.taskdone ||
+                    a.deadline.localeCompare(b.deadline)
+                ).map((data) => {
                   return (
                     <Tr key={data.id}>
                       <Td>{data.taskname}</Td>
                       <Td>{data.assignee}</Td>
                       <Td textAlign="center">
                         {data.taskdone ? (
-                          <CheckIcon color="green.500"/>
+                          <CheckIcon color="green.500" />
                         ) : (
                           <Checkbox
                             borderColor="purple"
@@ -141,18 +168,18 @@ export default function TaskLists() {
                         )}
                       </Td>
                       {data.deadline === "" ? (
-                        <Td textAlign='center'>-</Td>
+                        <Td textAlign="center">-</Td>
                       ) : (
                         <Td textAlign="center">{data.deadline}</Td>
                       )}
                       <Td>
                         {data.taskdone === true ? (
-                            <IconButton
-                              mr={2}
-                              colorScheme="green"
-                              aria-label="done"
-                              icon={<CheckIcon />}
-                            />
+                          <IconButton
+                            mr={2}
+                            colorScheme="green"
+                            aria-label="done"
+                            icon={<CheckIcon />}
+                          />
                         ) : (
                           <Link to={"/updatetask"}>
                             <IconButton
@@ -164,20 +191,63 @@ export default function TaskLists() {
                             />
                           </Link>
                         )}
-                        <IconButton
+                        {/* <IconButton
                           colorScheme="red"
                           aria-label="delete"
                           icon={<DeleteIcon />}
                           onClick={() => deleteData(data.id)}
+                        /> */}
+                        <IconButton
+                          colorScheme="red"
+                          aria-label="delete"
+                          icon={<DeleteIcon />}
+                          onClick={() => {
+                            setDeleteId(data.id);
+                            onOpen();
+                          }}
                         />
                       </Td>
                     </Tr>
                   );
-                }))}
+                })
+              )}
             </Tbody>
           </Table>
         </TableContainer>
       </Box>
+      <AlertDialog
+        isOpen={isOpen}
+        leastDestructiveRef={cancelRef}
+        onClose={onClose}
+      >
+        <AlertDialogOverlay>
+          <AlertDialogContent>
+            <AlertDialogHeader fontSize="lg" fontWeight="bold">
+              Delete Task
+            </AlertDialogHeader>
+
+            <AlertDialogBody>
+              Are you sure you want to delete this task?
+            </AlertDialogBody>
+
+            <AlertDialogFooter>
+              <Button ref={cancelRef} onClick={onClose}>
+                Cancel
+              </Button>
+              <Button
+                colorScheme="red"
+                onClick={() => {
+                  deleteData(deleteId);
+                  onClose();
+                }}
+                ml={3}
+              >
+                Delete
+              </Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialogOverlay>
+      </AlertDialog>
     </Flex>
   );
 }
