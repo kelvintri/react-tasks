@@ -80,6 +80,7 @@ export default function CreateTask() {
         pt={10}
         justifyContent="center"
         onSubmit={(e) => e.preventDefault()}
+        mb="70"
       >
         {/* <Flex width="full" align="center" justifyContent="center" pt={20}>
           <Box > */}
